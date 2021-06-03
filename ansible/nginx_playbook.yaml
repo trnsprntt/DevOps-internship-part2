@@ -1,0 +1,25 @@
+---
+- hosts: ubuntuServer
+  gather_facts: no
+  become: yes
+  roles:
+    - nginx
+  # tasks:
+  #   - name: install nginx and update apt cache
+  #     apt:
+  #       name: nginx
+  #       state: latest
+  #       update_cache: yes
+
+  #   - name: start nginx server
+  #     service:
+  #       name: nginx
+  #       enabled: yes
+  #       state: started
+
+  #   - name: check status
+  #     shell: service nginx status
+  #     register: stdout
+
+  #   - debug: 
+  #       var: stdout.stdout_lines

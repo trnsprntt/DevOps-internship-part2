@@ -1,0 +1,30 @@
+- name: Install Nginx
+  package:
+    name: nginx
+    state: latest
+
+- name: Copy website files to the server's document root
+  copy:
+    src: "{{ website_root }}"
+    dest: "{{ document_root }}"
+    mode: preserve
+
+- name: Apply Nginx template
+  template:
+    src: templates/nginx.conf.j2
+    dest: /etc/nginx/sites-available/default
+  notify: NGINX restart
+
+- name: Enable new site
+  file:
+    src: /etc/nginx/sites-available/default
+    dest: /etc/nginx/sites-enabled/default
+    state: link
+  notify: NGINX restart
+
+- name: Allow all access to tcp port 80
+  ufw:
+    rule: allow
+    port: '80'
+    proto: tcp
+
